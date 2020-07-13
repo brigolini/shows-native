@@ -1,6 +1,7 @@
-import {Text, View, StyleSheet, FlatList} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 import React, {useState, useEffect} from 'react';
 import show from "../api/show"
+import ShowList from "../components/ShowList";
 
 const HomeScreen = () => {
     [stateShows, setStateShows] = useState(null);
@@ -21,14 +22,10 @@ const HomeScreen = () => {
 
     return (
         <View style={styles.viewStyle}>
-            {stateShows === null ?
-                <Text>Aguarde... </Text>
-                :
-                <FlatList
-                    data={stateShows}
-                    renderItem={(data) => <Text>{data.item.name}</Text>}
-                    keyExtractor={(item) => item.id}
-                />
+            {stateShows===null?
+                <Text>Aguarde...</Text>
+            :
+                <ShowList list={stateShows}/>
             }
 
         </View>
