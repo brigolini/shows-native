@@ -1,34 +1,49 @@
 import {FlatList, Text, TouchableOpacity, StyleSheet, View} from "react-native";
-import React from 'react';
-import {Feather} from '@expo/vector-icons';
+import React, {useState} from 'react';
+import Details from "./Details";
 
 
 const ShowList = (props) => {
 
+    const [stateDetail, setStateDetail] = useState(null);
     return (
-        <FlatList
-            data={props.list}
-            renderItem={(data) =>
-                <TouchableOpacity
-                    onPress={() => console.info("Go to " + data.item.id)}>
-                    <View style={styles.button}>
-                        <Text style={styles.text}>{data.item.name}</Text>
-                        <TouchableOpacity onPress={()=>console.info("Apaga " + data.item.id)}>
-                            <Feather style={styles.icon} name="trash"/>
-                        </TouchableOpacity>
-                    </View>
-                </TouchableOpacity>}
-            keyExtractor={(item) => item.id}
-        />
+        <View style={styles.screen}>
+            <View style={styles.list}>
+                <FlatList
+                    data={props.list}
+                    renderItem={(data) =>
+                        <TouchableOpacity
+                            onPress={() => setStateDetail(data.item)}>
+                            <View style={styles.button}>
+                                <Text style={styles.text}>{data.item.name}</Text>
+                            </View>
+                        </TouchableOpacity>}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
+            <View style={styles.detail}>
+                <Details item={stateDetail}/>
+            </View>
+        </View>
     )
+
 }
 
 const styles = StyleSheet.create({
+    screen: {
+        flexDirection: "column",
+    },
+    detail: {
+        flex: 1,
+    },
+    list: {
+        flex: 1,
+    },
     button: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         paddingVertical: 5,
-        paddingHorizontal: 10,
+        paddingHorizontal: 7,
         borderTopWidth: 1,
         borderColor: 'gray',
         backgroundColor: "#DCDCDC"
