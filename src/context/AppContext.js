@@ -1,6 +1,7 @@
 import {createContext} from "react";
 
-export const AppContext = createContext(); 
+
+export const AppContext = createContext();
 
 export const appReducer = (state,action)=>{
     switch(action.type){
