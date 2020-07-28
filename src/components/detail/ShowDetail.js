@@ -20,7 +20,7 @@ const ShowDetail = ()=>{
             <Image
             style={styles.pictureStyle}
             resizeMode={"contain"}
-            source={{uri:image_thumbnail_path}}
+            source={image_thumbnail_path?{uri:image_thumbnail_path}:null}
             />
             </View>
         </View>

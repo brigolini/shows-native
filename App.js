@@ -4,6 +4,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import NewShowScreen from "./src/screens/NewShow";
 import ShowsScreen from "./src/screens/Shows";
 import HomeScreen from "./src/screens/Home";
+import LoginScreen from "./src/screens/Login"
 import { TouchableOpacity,StyleSheet,View } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -45,6 +46,7 @@ function App() {
   return (
 
     <AppContext.Provider value={{state,dispatch}}>
+      {state.token?
       <NavigationContainer>
         <TabNav.Navigator tabBar={props=> <TabBar {...props}/>}>
           <TabNav.Screen name={"Home"} component={HomeScreen}/>
@@ -52,6 +54,9 @@ function App() {
           <TabNav.Screen name={"NewShow"} component={NewShowScreen}/>
         </TabNav.Navigator>
       </NavigationContainer>
+    :
+      <LoginScreen/>
+    }
     </AppContext.Provider>
   )
 }

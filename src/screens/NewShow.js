@@ -1,7 +1,8 @@
 import React,{useState,useContext} from "react";
 import {View, StyleSheet,Button} from "react-native";
 import Input from "../components/form/Input";
-import {AppContext} from "../context/AppContext"
+import {AppContext} from "../context/AppContext";
+import showApi,{defaultErrorHandler} from "../api/show";
 
 const NewShowScreen = () => {
     
@@ -9,20 +10,25 @@ const NewShowScreen = () => {
     const [stateNetwork,setStateNetwork] = useState("");
     const [stateCountry,setStateCountry] = useState("");
     const [stateThumbNail,setStateThumbNail] = useState("");
-    const {dispatch} = useContext(AppContext);
+    const {dispatch,state} = useContext(AppContext);
 
     const salvar=()=>{
-      const action = {
-         type:"addItem",
-         payload:{
-           id:4228,
-           name:stateName,
-           netWork:stateNetwork,
-           country:stateCountry,
-           image_thumbnail_path:stateThumbNail,
-         }
-      };
-      dispatch(action);
+      
+      const newShow = {
+        name:stateName,
+        netWork:stateNetwork,
+        country:stateCountry,
+        image_thumbnail_path:stateThumbNail,
+      }
+      showApi(state.token).post("/shows",newShow).then(response=>{
+        const action = {
+          type:"addItem",
+          payload:response.data.access_token
+       };
+       dispatch(action);
+      }).catch(defaultErrorHandler);
+
+      
     }
 
     return (

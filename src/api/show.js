@@ -1,10 +1,22 @@
 import axios from "axios";
 
-export default axios.create({
-    baseURL:"http://977fa8e772b3.ngrok.io",
+const axiosInstance = (token)=> axios.create({
+    baseURL:"http://ff49ab90b290.ngrok.io",
     headers:{
         Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBhaW9tYXJjZWxvQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoic2VjcmV0byIsImlhdCI6MTU5NTM2MDQzNCwiZXhwIjoxNTk1Mzc4NDM0fQ.nsnRB49sGkA8HVLN90UnnAphxt1_huhe4Jsab2l1-TM"
+        `Bearer ${token}`
     }
-
 });
+
+export default axiosInstance;
+
+export const defaultErrorHandler=(error)=>{
+    switch(error.status){
+        case 500:
+            console.info("Erro irrecuperável");
+        case 404:
+            console.info("Recurso não encontrado")
+        default:
+            console.info("Erro desconhecido "+error)
+    }
+}
