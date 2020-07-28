@@ -5,7 +5,7 @@ export const AppContext = createContext();
 export const appReducer = (state,action)=>{
     switch(action.type){
         case "createList":
-            return {showList:action.payload};
+            return {...state,showList:action.payload};
         case "setItemSelected":
             return {...state,itemSelected:action.payload}
         case "addItem":
