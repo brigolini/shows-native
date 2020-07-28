@@ -11,7 +11,9 @@ export const appReducer = (state,action)=>{
         case "addItem":
             const showList = state.showList;
             showList.push(action.payload);
-            return {...state,showList}   
+            return {...state,showList}
+        case "login":
+            return {...state,token:action.payload}
         default:
             return state;
     }
@@ -19,5 +21,6 @@ export const appReducer = (state,action)=>{
 
 export const initialState = {
     showList:new Array(),
-    itemSelected:null
+    itemSelected:null,
+    token:null
 }
