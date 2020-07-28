@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://b02a6b530df0.ngrok.io",
+    baseURL: "http://00594ae4d15a.ngrok.io",
     headers: {
         Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBhaW9tYXJjZWxvQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoic2VjcmV0byIsImlhdCI6MTU5NTI5MzY2OCwiZXhwIjoxNTk1MzExNjY4fQ.as-J-dC6xPoSnimB1EtNWzDbpH_ixV8lioYheBLSHLw"
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBhaW9tYXJjZWxvQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoic2VjcmV0byIsImlhdCI6MTU5NTk1MTc1NCwiZXhwIjoxNTk1OTY5NzU0fQ.CxDif3RvXVDHlYdidY2onWY4u60hYxMt1yEOmO8W5Qg"
     }
 });
 
