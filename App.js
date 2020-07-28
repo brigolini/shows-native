@@ -1,64 +1,65 @@
-import React,{useReducer} from "react";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
-import {NavigationContainer} from "@react-navigation/native";
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import HomeScreen from './src/screens/Home';
+import DetailsScreen from "./src/components/Details";
 import NewShowScreen from "./src/screens/NewShow";
-import ShowsScreen from "./src/screens/Shows";
-import HomeScreen from "./src/screens/Home";
-import LoginScreen from "./src/screens/Login"
-import { TouchableOpacity,StyleSheet,View } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import React, {useReducer} from 'react';
+import {appReducer, initialState, AppContext} from "./src/context/AppContext";
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import ListShowsScreen from "./src/screens/ListShows";
+import {View} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import {AppContext,appReducer,initialState} from "./src/context/AppContext"
-
-const TabNav = createBottomTabNavigator();
-
-const tabBarStyles = StyleSheet.create({
-   viewStyle: {
-     flexDirection:"row",
-     justifyContent:"space-around"
-   }
-})
+import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 
-const TabBar = ({navigation,state}) => {
-  return (
-    <View style={tabBarStyles.viewStyle}>
-      <>
-        <TouchableOpacity onPress={()=>navigation.navigate("Home")}>
-          <AntDesign name="home" size={30} 
-              color={state.index===0?"blue":"black"} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigation.navigate("Shows")}>
-           <Feather name="list" size={30}
-              color={state.index===1?"blue":"black"} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigation.navigate("NewShow")}>
-          <Ionicons name="md-add" size={30} color="black"
-              color={state.index===2?"blue":"black"} />
-        </TouchableOpacity>
-      </>
-    </View>
-  )
-}
-function App() {
-  const [state,dispatch] = useReducer(appReducer,initialState);
-  return (
+const Tab = createBottomTabNavigator();
 
-    <AppContext.Provider value={{state,dispatch}}>
-      {state.token?
-      <NavigationContainer>
-        <TabNav.Navigator tabBar={props=> <TabBar {...props}/>}>
-          <TabNav.Screen name={"Home"} component={HomeScreen}/>
-          <TabNav.Screen name={"Shows"} component={ShowsScreen}/>
-          <TabNav.Screen name={"NewShow"} component={NewShowScreen}/>
-        </TabNav.Navigator>
-      </NavigationContainer>
-    :
-      <LoginScreen/>
+const styles = StyleSheet.create({
+    viewStyle: {
+        flexDirection: "row",
+        justifyContent: 'space-around',
     }
-    </AppContext.Provider>
-  )
+});
+const TabBar = ({navigation}) => {
+    return (
+        <View style={styles.viewStyle}>
+            <>
+                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                    <AntDesign name="home" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Shows")}>
+                    <Entypo name="list" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("NewShow")}>
+                    <Ionicons name="md-add" size={24} color="black" />
+
+                </TouchableOpacity>
+
+            </>
+
+            {/*<Text onPress={()=>navigation.navigate("Home")}>Home</Text>*/}
+            {/*<Text onPress={()=>navigation.navigate("Shows")}>Shows</Text>*/}
+            {/*<Text onPress={()=>navigation.navigate("NewShow")}>New Show</Text>*/}
+
+        </View>
+    )
+}
+export default function App() {
+
+    const [state, dispatch] = useReducer(appReducer, initialState);
+    return (
+        <AppContext.Provider value={{state, dispatch}}>
+            <NavigationContainer>
+                <Tab.Navigator tabBar={props => <TabBar {...props}/>}>
+                    <Tab.Screen name="Home" component={HomeScreen}/>
+                    <Tab.Screen name="Details" component={DetailsScreen}/>
+                    <Tab.Screen name="Shows" component={ListShowsScreen}/>
+                    <Tab.Screen name="NewShow" component={NewShowScreen}/>
+                </Tab.Navigator>
+            </NavigationContainer>
+        </AppContext.Provider>
+    );
 }
 
-export default App;
+
