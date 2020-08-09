@@ -1,4 +1,4 @@
-import React, {useReducer} from "react";
+import React from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
 import {NavigationContainer} from "@react-navigation/native";
 import NewShowScreen from "./src/screens/NewShow";
@@ -7,7 +7,9 @@ import HomeScreen from "./src/screens/Home";
 import LoginScreen from "./src/screens/Login"
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {AntDesign, Feather, Ionicons} from '@expo/vector-icons';
-import {AppContext, appReducer, initialState} from "./src/context/AppContext"
+import {Provider,useSelector} from "react-redux";
+import {createStore} from "redux";
+import {appReducer} from "./src/redux/reducer";
 
 const TabNav = createBottomTabNavigator();
 
@@ -39,12 +41,13 @@ const TabBar = ({navigation,state}) => {
         </View>
     )
 }
+
+const store = createStore(appReducer);
 function App() {
-    const [state,dispatch] = useReducer(appReducer,initialState);
     return (
 
-        <AppContext.Provider value={{state,dispatch}}>
-            {state.token?
+        <Provider store={store}>
+            {useSelector(state=>state).token?
                 <NavigationContainer>
                     <TabNav.Navigator tabBar={props=> <TabBar {...props}/>}>
                         <TabNav.Screen name={"Home"} component={HomeScreen}/>
@@ -55,7 +58,7 @@ function App() {
                 :
                 <LoginScreen/>
             }
-        </AppContext.Provider>
+        </Provider>
     )
 }
 

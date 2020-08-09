@@ -1,9 +1,9 @@
 import React,{useContext} from "react";
 import {Text,View,StyleSheet,Image} from "react-native";
-import {AppContext} from "../../context/AppContext"
 
 const ShowDetail = ()=>{
-    const {state} = useContext(AppContext);
+    const state = useSelector(state=>state);
+    console.info(state);
     const {name, country, network,image_thumbnail_path} = 
                             state.itemSelected?
                             state.showList.find(item=>item.id===state.itemSelected)

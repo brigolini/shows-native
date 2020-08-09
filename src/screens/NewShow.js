@@ -1,8 +1,8 @@
 import React, {useContext, useState} from "react";
 import {Button, StyleSheet, View} from "react-native";
 import Input from "../components/form/Input";
-import {AppContext} from "../context/AppContext";
 import showApi, {defaultErrorHandler} from "../api/show";
+import {useDispatch} from "react-redux";
 
 const NewShowScreen = () => {
 
@@ -10,7 +10,7 @@ const NewShowScreen = () => {
     const [stateNetwork,setStateNetwork] = useState("");
     const [stateCountry,setStateCountry] = useState("");
     const [stateThumbNail,setStateThumbNail] = useState("");
-    const {dispatch,state} = useContext(AppContext);
+    const dispatch = useDispatch();
 
     const signin=()=>{
 
@@ -21,11 +21,7 @@ const NewShowScreen = () => {
             image_thumbnail_path:stateThumbNail,
         }
         showApi(state.token).post("/shows",newShow).then(response=>{
-            const action = {
-                type:"addItem",
-                payload:response.data.access_token
-            };
-            dispatch(action);
+            dispatch(addItem(response.data.access_token))
         }).catch(defaultErrorHandler);
 
 

@@ -1,13 +1,13 @@
 import React, {useContext, useState} from "react";
 import {Button, StyleSheet, Text, View} from "react-native";
 import Input from "../components/form/Input";
-import {AppContext} from "../context/AppContext";
 import show from "../api/show";
+import {useDispatch} from "react-redux";
 
 
 const LoginScreen = () => {
 
-    const {dispatch} = useContext(AppContext);
+    const dispatch = useDispatch()
     const [userNameState,setStateUserName] = useState("");
     const [passwordState,setStatePassword] = useState("");
     const [stateMsg,setStateMsg] = useState("");
@@ -25,7 +25,7 @@ const LoginScreen = () => {
                 type:"login",
                 payload:response.data.access_token
             }
-            dispatch(action);
+            dispatch(addToken(response.data.access_token));
         }).catch(error=>{
             if (error.status===401){
                 setStateMsg("Usuário ou senha incorretos")

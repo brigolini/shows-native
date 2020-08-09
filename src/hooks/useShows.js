@@ -1,14 +1,13 @@
 import showApi from "../api/show";
-import {useContext, useEffect} from "react";
-import {AppContext} from "../context/AppContext";
+import { useEffect} from "react";
+import {useDispatch} from "react-redux";
 
 export const useShows=()=>{
-    const {state,dispatch} = useContext(AppContext);
+    const dispatch = useDispatch();
     useEffect(()=>{
         showApi(state.token).get("/shows")
             .then(response=>{
-                const action = {type:"createList",payload:response.data};
-                dispatch(action);
+                dispatch(createList(response.data));
             })
     },[]);
 

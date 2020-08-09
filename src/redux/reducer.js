@@ -1,27 +1,24 @@
-import {createContext} from "react";
-
-
-export const AppContext = createContext();
-
-export const appReducer = (state,action)=>{
-    switch(action.type){
-        case "createList":
-            return {...state,showList:action.payload};
-        case "setItemSelected":
-            return {...state,itemSelected:action.payload}
-        case "addItem":
-            const showList = state.showList;
-            showList.push(action.payload);
-            return {...state,showList}
-        case "login":
-            return {...state,token:action.payload}
-        default:
-            return state;
-    }
-};
+import {CREATE_LIST,SET_ITEM_SELECTED,ADD_ITEM,LOGIN} from "./actions"
 
 export const initialState = {
     showList:new Array(),
     itemSelected:null,
     token:null
 }
+
+export const appReducer = (state=initialState,action)=>{
+    switch(action.type){
+        case CREATE_LIST:
+            return {...state,showList:action.payload};
+        case SET_ITEM_SELECTED:
+            return {...state,itemSelected:action.payload}
+        case ADD_ITEM:
+            const showList = state.showList;
+            showList.push(action.payload);
+            return {...state,showList}
+        case LOGIN:
+            return {...state,token:action.payload}
+        default:
+            return state;
+    }
+};
